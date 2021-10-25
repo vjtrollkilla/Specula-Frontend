@@ -1,3 +1,4 @@
+const { webContents } = require("electron")
 const electron = require("electron")
 const fs = require("fs")
 const {
@@ -7,6 +8,7 @@ const {
     dialog,
     Menu
 } = electron
+let token
 let win
 let filePath = undefined
 app.on('ready', () => {
@@ -21,6 +23,11 @@ app.on('ready', () => {
     win.loadFile('htmlFiles/index.html')
     const menu = Menu.buildFromTemplate(menuTemplate)
     Menu.setApplicationMenu(menu)
+})
+ipcMain.on('asynchronous-message', (event, arg) => {
+    console.log(arg) // prints "ping"
+    win.webContents.send('asynchronous-message', 'pong')
+  
 })
 
 ipcMain.on('save', (event, text1) => {
@@ -46,7 +53,9 @@ ipcMain.on('save', (event, text1) => {
 
 });
 ipcMain.on('LoadStudentLogin', (event) => {
+    
     win.loadFile('htmlFiles/StudentLogin.html')
+   
 })
 
 ipcMain.on('LoadProfessorLogin', (event) => {
@@ -71,6 +80,14 @@ ipcMain.on("window-all-closed", (event) => {
 ipcMain.on('checkpostrequest', (event, data)=>{
     console.log(data)
 });
+ipcMain.on('axiosresponse', (event, data)=>{
+    console.log(data)
+    token = data
+    console.log(token)
+
+});
+
+
 /*const menuTemplate = [
 
     {
