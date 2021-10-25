@@ -57,12 +57,13 @@
         // }
         //)
         ipcRenderer.on('asynchronous-message', function (event, message) {
-                console.log(message); // Returns: {'SAVED': 'File Saved'}
-            });
+            console.log(message); // Returns: {'SAVED': 'File Saved'}
+        });
+
         function checkDatabase() {
             var check;
             let token = 'Token 28bfd73980b83dceb56eb469f777e65ca699f9bb'
-            
+
             /*let access_token = '28bfd73980b83dceb56eb469f777e65ca699f9bb'
             axios.get('https://api.github.com/user', {
                     headers: {
@@ -85,16 +86,17 @@
             //const result = axios.get('${apiurl}');
             //ipcRenderer.send('StudentRoomDisplay')
             //console.log("StudentRoomDisplay")
-            axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
-                headers: {
-                    Authorization: token
-                }
-            }).then(response => {
-                console.log(response.data);
-
-
-            })
-
+            function axiosGet() {
+                return axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
+                    headers: {
+                        Authorization: token
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                }).data
+            }
+            const axiosget = axiosGet()
+            console.log(axiosget)
             let check1 = axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
                 headers: {
                     Authorization: token

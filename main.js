@@ -58,6 +58,12 @@ ipcMain.on('LoadStudentLogin', (event) => {
    
 })
 
+ipcMain.on('chatroom', (event) => {
+    
+    win.loadFile('htmlFiles/chatroom.html')
+   
+})
+
 ipcMain.on('LoadProfessorLogin', (event) => {
     win.loadFile('htmlFiles/ProfessorLogin.html')
 })
