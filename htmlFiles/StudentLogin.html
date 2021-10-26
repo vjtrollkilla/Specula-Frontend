@@ -12,19 +12,22 @@
 </head>
 <script>
     const electron = require("electron")
-    const { ipcRenderer } = electron
-    ipcRenderer.send('asynchronous-message','wtf')
-    ipcRenderer.on('asynchronous-message',(event, message)=>{
-        console.log(message); // Returns: {'SAVED': 'File Saved'}
+    const {
+        ipcRenderer
+    } = electron
+    ipcRenderer.send('asynchronous-message', 'wtf')
+    ipcRenderer.on('asynchronous-message', (event, message) => {
+        console.log(message); 
     });
+
     function checkDatabase() {
-        
+
         ipcRenderer.send('RoomLogin')
         console.log("RoomLogin")
 
     }
-    
 </script>
+
 <body>
     <!-- Wrap your entire app inside .window -->
     <div class="window">
@@ -52,7 +55,7 @@
         </div>
     </div>
 
-    
+
 </body>
 
 </html>

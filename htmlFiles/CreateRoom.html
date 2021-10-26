@@ -47,10 +47,9 @@
         } = electron
         document.querySelector('#submit').onclick = function (e) {
             let roomname = document.querySelector('#roomname')
-            const roomName = roomname.value
+            let roomName = roomname.value
             console.log(roomName)
             ipcRenderer.send('roomName',roomName)
-            ipcRenderer.send('chatroom')
         }   
 
 

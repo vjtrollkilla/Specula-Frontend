@@ -27,13 +27,17 @@ app.on('ready', () => {
 ipcMain.on('asynchronous-message', (event, arg) => {
     console.log(arg) // prints "ping"
     win.webContents.send('asynchronous-message', 'pong')
+    
   
 })
+
 ipcMain.on('roomName', (event, arg) => {
     console.log(arg)    
-    let message = arg
-    win.webContents.send('roomInformation', message)
-  
+    win.webContents.on('did-finish-load', function () {
+        win.webContents.send('roomInformation', arg);
+    });
+    
+    win.loadFile('htmlFiles/chatroom.html')
 })
 
 
