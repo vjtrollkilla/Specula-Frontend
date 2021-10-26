@@ -16,39 +16,41 @@
     <div class="window">
         <!-- .toolbar-header sits at the top of your app -->
 
-        
+
         <!-- Your app's content goes inside .window-content -->
         <div class="window-content">
             <div class="padded-more">
-               <video id="videoCamera" autoplay></video>
-               <button class="btn btn-large btn-negative" onclick="exitRoom()">Exit Room</button>
-               
+                <video id="videoCamera" autoplay></video>
+                <button class="btn btn-large btn-negative" onclick="exitRoom()">Exit Room</button>
+
             </div>
-        
-           
-          
+
+
+
         </div>
     </div>
     <script>
         const electron = require("electron")
-        const { ipcRenderer } = electron
-     navigator.mediaDevices.getUserMedia({
-         video:{
-             width:{
-                 min:640,
-                 max:1280
-             },
-             height:{
-                 min:480,
-                 max:720
-             }
-         }
-     }).then(stream =>{
-         document.getElementById("videoCamera").srcObject = stream;
-     }) 
-     
-     function exitRoom() {
-            
+        const {
+            ipcRenderer
+        } = electron
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                width: {
+                    min: 640,
+                    max: 1280
+                },
+                height: {
+                    min: 480,
+                    max: 720
+                }
+            }
+        }).then(stream => {
+            document.getElementById("videoCamera").srcObject = stream;
+        })
+
+        function exitRoom() {
+
             ipcRenderer.send('window-all-closed')
             console.log("window-all-closed")
         }

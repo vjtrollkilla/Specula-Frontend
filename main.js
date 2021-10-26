@@ -29,6 +29,13 @@ ipcMain.on('asynchronous-message', (event, arg) => {
     win.webContents.send('asynchronous-message', 'pong')
   
 })
+ipcMain.on('roomName', (event, arg) => {
+    console.log(arg)    
+    let message = arg
+    win.webContents.send('roomInformation', message)
+  
+})
+
 
 ipcMain.on('save', (event, text1) => {
 
