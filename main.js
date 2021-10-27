@@ -37,7 +37,7 @@ ipcMain.on('roomName', (event, arg) => {
         win.webContents.send('roomInformation', arg);
     });
     
-    win.loadFile('htmlFiles/chatroom.html')
+   win.loadFile('htmlFiles/chatroom.html')
 })
 
 
