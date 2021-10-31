@@ -31,10 +31,12 @@ ipcMain.on('asynchronous-message', (event, arg) => {
   
 })
 
-ipcMain.on('roomName', (event, arg) => {
-    console.log(arg)    
+ipcMain.on('roomName', (event, arg1,arg2) => {
+    console.log(arg1)    
+    console.log(arg2)    
     win.webContents.on('did-finish-load', function () {
-        win.webContents.send('roomInformation', arg);
+        win.webContents.send('roomInformation', arg1,arg2);
+        
     });
     
    win.loadFile('htmlFiles/chatroom.html')

@@ -49,56 +49,67 @@
         </div>
     </div>
     <script>
-        ipcRenderer.on('roomInformation', (event, message) => {
+        ipcRenderer.on('roomInformation', (event, message, message1) => {
             let roomName = message;
+            let user = message1
             console.log(message); // Returns: {'SAVED': 'File Saved'}
             console.log(roomName)
+            console.log(message1)
+            const chatSocket = connect(roomName, user)
             document.querySelector('#submit').onclick = function (e) {
                 const messageInputDom = document.querySelector('#input');
                 const message = messageInputDom.value;
                 chatSocket.send(JSON.stringify({
                     'message': message,
-                    'username': 'VJ',
+                    'username': user,
                 }));
                 messageInputDom.value = '';
+                chatSocket.onclose()
             };
             console.log(roomName)
+            console.log(user)
 
-            connect(roomName)
-            
-            console.log(chatSocket)
-            
+
+
         });
 
-        function connect(roomName) {
+        function connect(roomName, User) {
             const chatSocket = new WebSocket(
-                "ws://127.0.0.1:8000/ws/chat/" + roomName + "/"
+                "ws://127.0.0.1:8000/ws/chat/" + User + "/" + roomName + "/"
             );
             chatSocket.onopen = function () {
                 // subscribe to some channels
-                ws.send(JSON.stringify({
+                chatSocket.send(JSON.stringify({
                     //.... some message the I must send when I connect ....
-                    
+                    'message': 'User enterd the examination',
+                    'username': User,
+
                 }));
             };
 
-            
+
             chatSocket.onmessage = function (e) {
                 const data = JSON.parse(e.data);
                 console.log(data)
                 document.querySelector('#chat-text').value += (data.username + ': ' + data.message + '\n')
             }
-            chatSocket.onclose = function (e) {
-                console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
-                setTimeout(function () {
-                    connect();
-                }, 1000);
+            chatSocket.onclose = function () {
+                
+                chatSocket.send(JSON.stringify({
+                    //.... some message the I must send when I connect ....
+                    'message': 'User disconnected from the examination',
+                    'username': User,
+
+                }));
+                chatSocket.close()
+
             };
 
             chatSocket.onerror = function (e) {
-                console.error('Socket encountered error: ', e.message, 'Closing socket');
+                console.log('Socket encountered error: ', e.message, 'Closing socket');
                 chatSocket.close();
             };
+            return chatSocket
         }
     </script>
 

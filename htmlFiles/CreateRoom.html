@@ -28,8 +28,8 @@
                         <input type="email" class="form-control" placeholder="Email" id="roomname">
                     </div>
                     <div class="form-group">
-                        <label>Enter password</label>
-                        <input type="password" class="form-control" placeholder="Password">
+                        <label>Enter your username</label>
+                        <input type="username" class="form-control" id="username" placeholder="Password">
 
                     </div>
 
@@ -47,9 +47,12 @@
         } = electron
         document.querySelector('#submit').onclick = function (e) {
             let roomname = document.querySelector('#roomname')
+            let username = document.querySelector('#username')
             let roomName = roomname.value
+            let userName = username.value
             console.log(roomName)
-            ipcRenderer.send('roomName',roomName)
+            console.log(userName)
+            ipcRenderer.send('roomName',roomName,userName)
         }   
 
 
