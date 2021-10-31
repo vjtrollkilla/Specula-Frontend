@@ -49,12 +49,14 @@
         </div>
     </div>
     <script>
-        ipcRenderer.on('roomInformation', (event, message, message1) => {
+        ipcRenderer.on('roomInformation', (event, message, message1,token) => {
             let roomName = message;
             let user = message1
             console.log(message); // Returns: {'SAVED': 'File Saved'}
             console.log(roomName)
             console.log(message1)
+            console.log(token)
+            console.log(token.token)
             const chatSocket = connect(roomName, user)
             document.querySelector('#submit').onclick = function (e) {
                 const messageInputDom = document.querySelector('#input');

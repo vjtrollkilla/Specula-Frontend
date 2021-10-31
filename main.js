@@ -34,8 +34,9 @@ ipcMain.on('asynchronous-message', (event, arg) => {
 ipcMain.on('roomName', (event, arg1,arg2) => {
     console.log(arg1)    
     console.log(arg2)    
+    console.log(token)
     win.webContents.on('did-finish-load', function () {
-        win.webContents.send('roomInformation', arg1,arg2);
+        win.webContents.send('roomInformation', arg1,arg2,token);
         
     });
     
@@ -71,9 +72,15 @@ ipcMain.on('LoadStudentLogin', (event) => {
    
 })
 
-ipcMain.on('chatroom', (event) => {
+ipcMain.on('Professoraxiosresponse', (event,arg1) => {
+    token = arg1
+    win.webContents.on('did-finish-load', function () {
+        win.webContents.send('CreateRoom', token);
+        
+    });
     
-    win.loadFile('htmlFiles/chatroom.html')
+    console.log(token)
+    win.loadFile('htmlFiles/CreateRoom.html')
    
 })
 

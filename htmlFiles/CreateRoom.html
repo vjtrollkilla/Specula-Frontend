@@ -39,12 +39,34 @@
 
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js"
+    integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         const electron = require("electron")
 
         const {
             ipcRenderer
         } = electron
+        let tokenString = 'Token'
+        let token
+        ipcRenderer.on('CreateRoom', (event, message) => {
+            token = tokenString.concat(' ',message.token)
+            console.log(message.token)
+           
+            axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
+                headers: {
+                    Authorization: token
+                }
+            }).then(response => {
+
+                console.log(response.data)
+                check1 = response.data
+                console.log(check1)
+                //ipcRenderer.send('axiosresponse', check1)
+
+            })
+        })  
         document.querySelector('#submit').onclick = function (e) {
             let roomname = document.querySelector('#roomname')
             let username = document.querySelector('#username')
