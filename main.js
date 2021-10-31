@@ -100,8 +100,12 @@ ipcMain.on('checkpostrequest', (event, data)=>{
     console.log(data)
 });
 ipcMain.on('axiosresponse', (event, data)=>{
-    console.log(data)
     token = data
+    win.webContents.on('did-finish-load', function () {
+        win.webContents.send('RoomLogin', token);
+        
+    });
+    win.loadFile('htmlFiles/RoomLogin.html')
     console.log(token)
 
 });

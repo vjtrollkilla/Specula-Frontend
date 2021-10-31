@@ -49,7 +49,28 @@
         const {
             ipcRenderer
         } = electron
-        const token = 'Token 28bfd73980b83dceb56eb469f777e65ca699f9bb';
+        let tokenString = 'Token'
+        let token
+        ipcRenderer.on('RoomLogin', (event, message) => {
+            console.log(message.token)
+            token = tokenString.concat(' ',message.token)
+            console.log(token)
+
+            axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
+                headers: {
+                    Authorization: token
+                }
+            }).then(response => {
+
+                console.log(response.data)
+                check1 = response.data
+                console.log(check1)
+                //ipcRenderer.send('axiosresponse', check1)
+
+            })
+        })  
+        console.log(token)
+        
         //const apiurl='http://127.0.0.1:8000/api/registerationStudent/ListAllStudents/';
         //axios.interceptors.request.use(
         //   config=>{
@@ -96,9 +117,7 @@
         };
 
 
-        let check = sendGetRequest()
-
-        console.log(check)
+        
 
         
     </script>

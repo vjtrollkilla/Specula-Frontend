@@ -26,7 +26,7 @@
     });
 
     function login() {
-        const token = 'Token 28bfd73980b83dceb56eb469f777e65ca699f9bb';
+        let token;
         let email = document.getElementById("email").value;
         let password = document.getElementById("password").value;
         var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -50,19 +50,21 @@
                 console.log(response)
                 if (response.status == 200) {
                     console.log(response.data)
-                    const data = response.data
-                    console.log(data)
-                    alert('Thank You for Login & You are Redirecting to Campuslife Website');
+                    token = response.data
+                    console.log(token)
+                    alert('Login Successful');
+                    ipcRenderer.send('axiosresponse',token)
+                    ipcRenderer.send('RoomLogin')
                 } else {
                     if (response.status == 400) {
-                        alert('Entered wrong details')
+                        alert('Enter the right details')
                     }
 
                 }
                 //ipcRenderer.send('RoomLogin')
                 //console.log("RoomLogin")
             }).catch(function (error) {
-                alert('Entered wrong details');
+                alert('Enter the right details');
             })
 
         }
