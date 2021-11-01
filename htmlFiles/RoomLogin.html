@@ -23,17 +23,17 @@
                 <h1> Enter Room Details</h1>
                 <form>
                     <div class="form-group">
-                        <label>Enter roomname</label>
-                        <input type="email" class="form-control" placeholder="Email">
+                        <label>Enter Room name</label>
+                        <input type="email" class="form-control" placeholder="Email" id="roomname">
                     </div>
                     <div class="form-group">
-                        <label>Enter room password</label>
-                        <input type="password" class="form-control" placeholder="Password">
+                        <label>Enter Username</label>
+                        <input type="username" class="form-control" placeholder="username" id="username">
 
                     </div>
 
                 </form>
-                <button class="btn btn-large btn-primary" type="submit" onclick="checkDatabase()">Login</button>
+                <button class="btn btn-large btn-primary" type="submit" id="submit"onclick="">Login</button>
             </div>
 
 
@@ -51,6 +51,15 @@
         } = electron
         let tokenString = 'Token'
         let token
+        document.querySelector('#submit').onclick = function (e) {
+            let roomname = document.querySelector('#roomname')
+            let username = document.querySelector('#username')
+            let roomName = roomname.value
+            let userName = username.value
+            console.log(roomName)
+            console.log(userName)
+            ipcRenderer.send('StudentRoomDisplay',roomName,userName)
+        }
         ipcRenderer.on('RoomLogin', (event, message) => {
             console.log(message.token)
             token = tokenString.concat(' ',message.token)

@@ -42,6 +42,17 @@ ipcMain.on('roomName', (event, arg1,arg2) => {
     
    win.loadFile('htmlFiles/chatroom.html')
 })
+ipcMain.on('StudentRoomDisplay', (event, arg1,arg2) => {
+    console.log(arg1)    
+    console.log(arg2)    
+    console.log(token)
+    win.webContents.on('did-finish-load', function () {
+        win.webContents.send('StudentRoomDisplay', arg1,arg2,token);
+        
+    });
+    
+   win.loadFile('htmlFiles/StudentRoomDisplay.html')
+})
 
 
 ipcMain.on('save', (event, text1) => {
