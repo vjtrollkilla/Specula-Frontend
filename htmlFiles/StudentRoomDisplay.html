@@ -60,20 +60,20 @@
     </div>
 
     <script>
-        /*navigator.mediaDevices.getUserMedia({
-                                            video: {
-                                                width: {
-                                                    min: 640,
-                                                    max: 1280
-                                                },
-                                                height: {
-                                                    min: 480,
-                                                    max: 720
-                                                }
-                                            }
-                                        }).then(stream => {
-                                            document.getElementById("videoCamera").srcObject = stream;
-                                        })*/
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                width: {
+                    min: 640,
+                    max: 1280
+                },
+                height: {
+                    min: 480,
+                    max: 720
+                }
+            }
+        }).then(stream => {
+            document.getElementById("videoCamera").srcObject = stream;
+        })
         ipcRenderer.on('StudentRoomDisplay', (event, message, message1, token) => {
             let roomName = message;
             let user = message1

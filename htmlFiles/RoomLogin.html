@@ -33,16 +33,14 @@
                     </div>
 
                 </form>
-                <button class="btn btn-large btn-primary" type="submit" id="submit"onclick="">Login</button>
+                <button class="btn btn-large btn-primary" type="submit" id="submit" onclick="">Login</button>
             </div>
 
 
 
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js"
-        integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         const electron = require("electron")
 
@@ -51,18 +49,18 @@
         } = electron
         let tokenString = 'Token'
         let token
-        document.querySelector('#submit').onclick = function (e) {
+        document.querySelector('#submit').onclick = function(e) {
             let roomname = document.querySelector('#roomname')
             let username = document.querySelector('#username')
             let roomName = roomname.value
             let userName = username.value
             console.log(roomName)
             console.log(userName)
-            ipcRenderer.send('StudentRoomDisplay',roomName,userName)
+            ipcRenderer.send('StudentRoomDisplay', roomName, userName)
         }
         ipcRenderer.on('RoomLogin', (event, message) => {
             console.log(message.token)
-            token = tokenString.concat(' ',message.token)
+            token = tokenString.concat(' ', message.token)
             console.log(token)
 
             axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
@@ -74,12 +72,12 @@
                 console.log(response.data)
                 check1 = response.data
                 console.log(check1)
-                //ipcRenderer.send('axiosresponse', check1)
+                    //ipcRenderer.send('axiosresponse', check1)
 
             })
-        })  
+        })
         console.log(token)
-        
+
         //const apiurl='http://127.0.0.1:8000/api/registerationStudent/ListAllStudents/';
         //axios.interceptors.request.use(
         //   config=>{
@@ -92,7 +90,7 @@
         let check1
 
         function checkDatabase() {
-            
+
             let check2 = axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
                 headers: {
                     Authorization: token
@@ -108,7 +106,7 @@
             console.log(check2)
 
         }
-        const sendGetRequest = async () => {
+        const sendGetRequest = async() => {
             try {
                 const resp = await axios.get(
                     'http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
@@ -124,11 +122,6 @@
                 return err
             }
         };
-
-
-        
-
-        
     </script>
 </body>
 
