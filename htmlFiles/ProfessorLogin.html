@@ -6,14 +6,75 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/photon.css">
-
+    <link href="css/#ProfessorLogin.css">
     <!-- Electron Javascript -->
 
 </head>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js"
-    integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+    body {
+        background-color: rgb(255, 0, 0);
+        color: rgb(27, 27, 27);
+        font-family: 'Ubuntu', sans-serif;
+    }
+    
+    .dark-mode {
+        background-color: #002b2b;
+        color: white;
+    }
+    
+    button {
+        cursor: pointer;
+        border-radius: 40px;
+        border-style: none;
+        padding: 15px;
+        background-color: rgb(97, 0, 0);
+        color: white;
+    }
+    
+    .main {
+        margin: auto;
+        width: 80%;
+        padding-top: 10px;
+        height: 500px;
+        box-shadow: 0px 0px 1px 15px #c2c2c23f;
+        background: rgba(136, 126, 126, 0.04);
+        border-radius: 20px;
+    }
+    
+    .submit {
+        cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background-color: rgb(119, 0, 0);
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 13px;
+        align-items: center;
+    }
+    
+    .submit:hover {
+        background-color: rgb(0, 43, 33);
+    }
+    
+    .label {
+        margin: 40px;
+        padding-top: 40px;
+        color: #8d8d8d;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 23px;
+    }
+    
+    .field {
+        padding: 10px 25px;
+        border-radius: 10px;
+        border: 2px solid rgba(0, 0, 0, 0.062);
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </script>
 <script>
     const electron = require("electron")
@@ -53,8 +114,8 @@
                     token = response.data
                     console.log(token)
                     alert('Login Successful');
-                    ipcRenderer.send('Professoraxiosresponse',token)
-                    
+                    ipcRenderer.send('Professoraxiosresponse', token)
+
                 } else {
                     if (response.status == 400) {
                         alert('Enter the right details')
@@ -63,29 +124,11 @@
                 }
                 //ipcRenderer.send('RoomLogin')
                 //console.log("RoomLogin")
-            }).catch(function (error) {
+            }).catch(function(error) {
                 alert('Enter the right details');
             })
 
         }
-    }
-
-
-    function checkDatabase() {
-        const token = 'Token 28bfd73980b83dceb56eb469f777e65ca699f9bb';
-        let check2 = axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
-            headers: {
-                Authorization: token
-            }
-        }).then(response => {
-            console.log(response.data)
-            sleep(5000)
-            sleep(1000)
-            //ipcRenderer.send('RoomLogin')
-            console.log("RoomLogin")
-        })
-
-
     }
 
     function sleep(milliseconds) {
@@ -107,35 +150,32 @@
         <div class="window-content">
 
             <div class="padded-more">
-                <form>
-                    <div class="form-group">
-                        <label>Email address</label>
-                        <input type="email" class="form-control" placeholder="Email" id="email">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" placeholder="Password" id="password">
+                <div class="main">
+                    <form>
 
-                    </div>
 
+                        <label class="label">Email address</label>
+                        <input type="email" class="field" placeholder="Email" id="email">
+
+
+                        <label class="label">Password</label>
+                        <input type="password" class="field" placeholder="Password" id="password">
+
+
+
+
+                </div>
                 </form>
-                <button class="btn btn-large btn-primary" type="submit" onclick="login()">Login</button>
+                <button class="submit" type="submit" onclick="login()">Login</button>
             </div>
+
+
         </div>
     </div>
+    </div>
+
 
 
 </body>
 
 </html>
-<script>
-    const electron = require("electron")
-    const { ipcRenderer } = electron
-
-    function checkDatabase() {
-        
-        ipcRenderer.send('RoomCreation')
-        console.log("RoomCreation")
-    }
-
-</script>

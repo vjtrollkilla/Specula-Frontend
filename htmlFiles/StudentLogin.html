@@ -11,9 +11,7 @@
 
 </head>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js"
-    integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </script>
 <script>
     const electron = require("electron")
@@ -53,8 +51,8 @@
                     token = response.data
                     console.log(token)
                     alert('Login Successful');
-                    ipcRenderer.send('axiosresponse',token)
-                    ipcRenderer.send('RoomLogin')
+                    ipcRenderer.send('axiosresponse', token)
+                        //ipcRenderer.send('RoomLogin')
                 } else {
                     if (response.status == 400) {
                         alert('Enter the right details')
@@ -63,7 +61,7 @@
                 }
                 //ipcRenderer.send('RoomLogin')
                 //console.log("RoomLogin")
-            }).catch(function (error) {
+            }).catch(function(error) {
                 alert('Enter the right details');
             })
 
@@ -81,7 +79,7 @@
             console.log(response.data)
             sleep(5000)
             sleep(1000)
-            //ipcRenderer.send('RoomLogin')
+                //ipcRenderer.send('RoomLogin')
             console.log("RoomLogin")
         })
 

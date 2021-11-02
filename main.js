@@ -1,4 +1,6 @@
-const { webContents } = require("electron")
+const {
+    webContents
+} = require("electron")
 const electron = require("electron")
 const fs = require("fs")
 const {
@@ -27,31 +29,31 @@ app.on('ready', () => {
 ipcMain.on('asynchronous-message', (event, arg) => {
     console.log(arg) // prints "ping"
     win.webContents.send('asynchronous-message', 'pong')
-    
-  
+
+
 })
 
-ipcMain.on('roomName', (event, arg1,arg2) => {
-    console.log(arg1)    
-    console.log(arg2)    
+ipcMain.on('roomName', (event, arg1, arg2) => {
+    console.log(arg1)
+    console.log(arg2)
     console.log(token)
-    win.webContents.on('did-finish-load', function () {
-        win.webContents.send('roomInformation', arg1,arg2,token);
-        
+    win.webContents.on('did-finish-load', function() {
+        win.webContents.send('roomInformation', arg1, arg2, token);
+
     });
-    
-   win.loadFile('htmlFiles/chatroom.html')
+
+    win.loadFile('htmlFiles/chatroom.html')
 })
-ipcMain.on('StudentRoomDisplay', (event, arg1,arg2) => {
-    console.log(arg1)    
-    console.log(arg2)    
+ipcMain.on('StudentRoomDisplay', (event, arg1, arg2) => {
+    console.log(arg1)
+    console.log(arg2)
     console.log(token)
-    win.webContents.on('did-finish-load', function () {
-        win.webContents.send('StudentRoomDisplay', arg1,arg2,token);
-        
+    win.webContents.on('did-finish-load', function() {
+        win.webContents.send('StudentRoomDisplay', arg1, arg2, token);
+
     });
-    
-   win.loadFile('htmlFiles/StudentRoomDisplay.html')
+
+    win.loadFile('htmlFiles/StudentRoomDisplay.html')
 })
 
 
@@ -78,22 +80,12 @@ ipcMain.on('save', (event, text1) => {
 
 });
 ipcMain.on('LoadStudentLogin', (event) => {
-    
+
     win.loadFile('htmlFiles/StudentLogin.html')
-   
+
 })
 
-ipcMain.on('Professoraxiosresponse', (event,arg1) => {
-    token = arg1
-    win.webContents.on('did-finish-load', function () {
-        win.webContents.send('CreateRoom', token);
-        
-    });
-    
-    console.log(token)
-    win.loadFile('htmlFiles/CreateRoom.html')
-   
-})
+
 
 ipcMain.on('LoadProfessorLogin', (event) => {
     win.loadFile('htmlFiles/ProfessorLogin.html')
@@ -114,21 +106,31 @@ ipcMain.on("window-all-closed", (event) => {
     app.quit();
 
 });
-ipcMain.on('checkpostrequest', (event, data)=>{
+ipcMain.on('checkpostrequest', (event, data) => {
     console.log(data)
 });
-ipcMain.on('axiosresponse', (event, data)=>{
+ipcMain.on('axiosresponse', (event, data) => {
     token = data
-    win.webContents.on('did-finish-load', function () {
+    win.webContents.on('did-finish-load', function() {
         win.webContents.send('RoomLogin', token);
-        
+
     });
     win.loadFile('htmlFiles/RoomLogin.html')
     console.log(token)
 
 });
 
+ipcMain.on('Professoraxiosresponse', (event, data) => {
+    token = data
+    win.webContents.on('did-finish-load', function() {
+        win.webContents.send('CreateRoom', token);
 
+    });
+
+    console.log(token)
+    win.loadFile('htmlFiles/CreateRoom.html')
+
+});
 /*const menuTemplate = [
 
     {
