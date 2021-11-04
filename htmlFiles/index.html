@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/index.css" />
     <script defer src="render.js"></script>
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
     body {
         background-color: rgb(245, 245, 245);
@@ -99,6 +100,8 @@
         const {
             ipcRenderer
         } = electron
+        let username = "6777777"
+        let subject = "CSCI321"
 
         function loadStudentLogin() {
             ipcRenderer.send('LoadStudentLogin')
