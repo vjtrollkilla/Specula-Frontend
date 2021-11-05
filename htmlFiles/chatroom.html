@@ -160,7 +160,7 @@
             axios.get('http://127.0.0.1:8000/api/TimeLine/' + examName + '/' + id + '/').then((response) => {
                 while (count < response.data.length) {
                     console.log(response.data)
-                    userTimeline.innerHTML += `<li> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <li>`
+                    userTimeline.innerHTML += `<p> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <p> <br>`
                     count = count + 1;
                     console.log(response.data.length)
                     console.log(count)
