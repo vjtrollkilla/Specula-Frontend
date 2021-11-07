@@ -47,34 +47,75 @@
         const {
             ipcRenderer
         } = electron
-        let tokenString = 'Token'
+
         let token
-        document.querySelector('#submit').onclick = function(e) {
-            let roomname = document.querySelector('#roomname')
-            let username = document.querySelector('#username')
-            let roomName = roomname.value
-            let userName = username.value
-            console.log(roomName)
-            console.log(userName)
-            ipcRenderer.send('StudentRoomDisplay', roomName, userName)
-        }
+
         ipcRenderer.on('RoomLogin', (event, message) => {
-            console.log(message.token)
-            token = tokenString.concat(' ', message.token)
-            console.log(token)
+            console.log(message)
+            token = message
+            document.querySelector('#submit').onclick = function(e) {
+                let roomname = document.querySelector('#roomname')
+                let username = document.querySelector('#username')
+                let roomName = roomname.value
+                let userName = username.value
+                console.log(roomName)
+                console.log(userName)
 
-            axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
-                headers: {
-                    Authorization: token
-                }
-            }).then(response => {
 
-                console.log(response.data)
-                check1 = response.data
-                console.log(check1)
-                    //ipcRenderer.send('axiosresponse', check1)
+                axios.get('http://127.0.0.1:8000/api/roomDetail/' + roomName + '/', {
+                    headers: {
+                        Authorization: token
+                    }
+                }).then(response => {
 
-            })
+                    console.log(response)
+                    check1 = response.data
+                    console.log(check1)
+                        //ipcRenderer.send('axiosresponse', check1)
+                    if (response.status == 200) {
+                        axios.get('http://127.0.0.1:8000/api/Student/' + userName + '/', {
+                            headers: {
+                                Authorization: token
+                            }
+                        }).then(response => {
+                            console.log(token)
+                            console.log(roomName)
+                            console.log(userName)
+                            if (response.status == 200) {
+                                const studentDetails = {
+
+                                    studentID: userName,
+                                    CurrentExam: roomName
+                                }
+                                axios.put('http://127.0.0.1:8000/api/Student/' + userName +
+                                    '/', studentDetails
+                                ).then(response => {
+                                    console.log(response)
+                                    ipcRenderer.send('StudentRoomDisplay', roomName,
+                                        userName)
+                                }).catch(function(err) {
+                                    alert('authorization failed')
+                                })
+
+                            }
+
+                            //ipcRenderer.send('roomName', roomName, userName)
+                        }).catch(function(err) {
+                            alert('Student ID provided is incorrect')
+
+                        })
+
+                        console.log(roomName)
+                        console.log(userName)
+                            //ipcRenderer.send('roomName', roomName, userName)
+                    }
+                }).catch(function(err) {
+                    alert('Room ID provided is incorrect')
+
+                })
+
+            }
+
         })
         console.log(token)
 
@@ -85,43 +126,6 @@
         //  return config;
         // }
         //)
-
-
-        let check1
-
-        function checkDatabase() {
-
-            let check2 = axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
-                headers: {
-                    Authorization: token
-                }
-            }).then(response => {
-
-                console.log(response.data)
-                check1 = response.data
-                console.log(check1)
-                ipcRenderer.send('axiosresponse', check1)
-
-            })
-            console.log(check2)
-
-        }
-        const sendGetRequest = async() => {
-            try {
-                const resp = await axios.get(
-                    'http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
-                        headers: {
-                            Authorization: token
-                        }
-                    })
-                console.log(resp.data);
-                return resp.data
-            } catch (err) {
-                // Handle Error Here
-                console.error(err);
-                return err
-            }
-        };
     </script>
 </body>
 

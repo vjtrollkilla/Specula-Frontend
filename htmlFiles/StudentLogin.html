@@ -47,11 +47,25 @@
             }).then(response => {
                 console.log(response)
                 if (response.status == 200) {
-                    console.log(response.data)
-                    token = response.data
+                    console.log(response.data.token)
+                    token = "Token " + response.data.token
                     console.log(token)
-                    alert('Login Successful');
-                    ipcRenderer.send('axiosresponse', token)
+                    axios.get('http://127.0.0.1:8000/api/registerationStudent/ListAllStudents/', {
+                            headers: {
+                                Authorization: token
+                            }
+                        }).then(response => {
+
+                            if (response.status == 200) {
+                                console.log(response)
+                                ipcRenderer.send('axiosresponse', token)
+                            }
+
+                        }).catch(function(err) {
+                            alert('Incorrect student details')
+
+                        })
+                        //ipcRenderer.send('axiosresponse', token)
                         //ipcRenderer.send('RoomLogin')
                 } else {
                     if (response.status == 400) {
@@ -66,32 +80,6 @@
             })
 
         }
-    }
-
-
-    function checkDatabase() {
-        const token = 'Token 28bfd73980b83dceb56eb469f777e65ca699f9bb';
-        let check2 = axios.get('http://127.0.0.1:8000/api/registerationProfessor/ListAllProfessors/', {
-            headers: {
-                Authorization: token
-            }
-        }).then(response => {
-            console.log(response.data)
-            sleep(5000)
-            sleep(1000)
-                //ipcRenderer.send('RoomLogin')
-            console.log("RoomLogin")
-        })
-
-
-    }
-
-    function sleep(milliseconds) {
-        const date = Date.now();
-        let currentDate = null;
-        do {
-            currentDate = Date.now();
-        } while (currentDate - date < milliseconds);
     }
 </script>
 

@@ -94,10 +94,8 @@ ipcMain.on('LoadProfessorLogin', (event) => {
 ipcMain.on('RoomCreation', (event) => {
     win.loadFile('htmlFiles/CreateRoom.html')
 })
-ipcMain.on('RoomLogin', (event) => {
-    win.loadFile('htmlFiles/RoomLogin.html')
-})
-ipcMain.on('StudentRoomDisplay', (event) => {
+
+ipcMain.on('StudentRoomDisplay', (event, ) => {
     win.loadFile('htmlFiles/StudentRoomDisplay.html')
 })
 

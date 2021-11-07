@@ -47,10 +47,9 @@
     </div>
 
     <div>
+        <h3>List of students in Examination</h3>
         <ul id="thelist">
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
+
         </ul>
     </div>
     <div>
@@ -63,6 +62,7 @@
     <script>
         let examName
         let userName
+        let Token
         ipcRenderer.on('roomInformation', (event, message, message1, token) => {
             let roomName = message;
             let user = message1
@@ -70,7 +70,8 @@
             userName = message1
             console.log(examName)
             console.log(userName)
-
+            console.log(token.token)
+            Token = "Token " + token.token
             const chatSocket = connect(roomName, user)
             document.querySelector('#submit').onclick = function(e) {
                 const messageInputDom = document.querySelector('#input');
@@ -134,12 +135,17 @@
         function addelement() {
             var completelist = document.getElementById("thelist");
             let count = 0;
-            axios.get('http://127.0.0.1:8000/api/registerationStudent/ListAllStudents/').then((response) => {
+            axios.get('http://127.0.0.1:8000/api/ExamStudent/' + examName + '/', {
+                headers: {
+                    Authorization: Token
+                }
+            }).then((response) => {
                 while (count < response.data.length) {
                     console.log(response.data)
                     let id = response.data[count].studentID
                     console.log(id)
-                    completelist.innerHTML += `<li onclick =showtimeline(${id})> ID ${response.data[count].studentID} name ${response.data[count].name} </li>`
+                    completelist.innerHTML +=
+                        `<li onclick =showtimeline(${id})> ID ${response.data[count].studentID} name ${response.data[count].name} </li>`
                     count = count + 1;
                     console.log(response.data.length)
                     console.log(count)
@@ -157,10 +163,15 @@
             let count = 0
             console.log(id)
             $('#timelineStudent').empty()
-            axios.get('http://127.0.0.1:8000/api/TimeLine/' + examName + '/' + id + '/').then((response) => {
+            axios.get('http://127.0.0.1:8000/api/TimeLine/' + examName + '/' + id + '/', {
+                headers: {
+                    Authorization: Token
+                }
+            }).then((response) => {
                 while (count < response.data.length) {
                     console.log(response.data)
-                    userTimeline.innerHTML += `<p> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <p> <br>`
+                    userTimeline.innerHTML +=
+                        `<p> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <p> <br>`
                     count = count + 1;
                     console.log(response.data.length)
                     console.log(count)
