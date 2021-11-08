@@ -23,14 +23,8 @@
 
 
 
-<script>
-    const electron = require("electron")
-    window.jQuery = window.$ = require('jquery')
 
-    const {
-        ipcRenderer
-    } = require("electron")
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
@@ -112,6 +106,22 @@
                     'username': User,
 
                 }));
+
+                let ts = new Date();
+                let time = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds()
+                console.log(time)
+                    /*axios.post('http://127.0.0.1:8000/api/TimeLine/', {
+
+                        student: User,
+                        AItimeStamp: time,
+                        CurrentExam: roomName,
+                        AIdangerLevel: '0',
+                        AItextMessage: 'Entered examination'
+
+
+
+
+                    })*/
             };
 
 

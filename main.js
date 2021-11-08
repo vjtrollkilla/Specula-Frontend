@@ -21,8 +21,10 @@ app.on('ready', () => {
             contextIsolation: false,
 
         },
+
     })
-    win.loadFile('htmlFiles/index.html')
+    win.maximize(),
+        win.loadFile('htmlFiles/index.html')
     const menu = Menu.buildFromTemplate(menuTemplate)
     Menu.setApplicationMenu(menu)
 })
@@ -129,6 +131,7 @@ ipcMain.on('Professoraxiosresponse', (event, data) => {
     win.loadFile('htmlFiles/CreateRoom.html')
 
 });
+
 /*const menuTemplate = [
 
     {

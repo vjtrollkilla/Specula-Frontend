@@ -53,139 +53,164 @@
         </ul>
     </div>
     <div>
-        <ul id="timelineStudent">
+        <p id="timelineExam">
 
-
-        </ul>
+        </p>
     </div>
-    <button onclick="addelement()">Add Item</button>
-    <script>
-        let examName
-        let userName
-        let Token
-        ipcRenderer.on('roomInformation', (event, message, message1, token) => {
-            let roomName = message;
-            let user = message1
-            examName = message
-            userName = message1
-            console.log(examName)
-            console.log(userName)
-            console.log(token.token)
-            Token = "Token " + token.token
-            const chatSocket = connect(roomName, user)
-            document.querySelector('#submit').onclick = function(e) {
-                const messageInputDom = document.querySelector('#input');
-                const message = messageInputDom.value;
-                chatSocket.send(JSON.stringify({
-                    'message': message,
-                    'username': user,
-                }));
-                messageInputDom.value = '';
-                chatSocket.onclose()
-            };
-            console.log(roomName)
-            console.log(user)
+    <div>
+        <button onclick="addelement()">Add Item</button>
+        <button onclick="showTimeLinebasedOnExam()">View Timeline</button>
+        <script>
+            let examName
+            let userName
+            let Token
+            ipcRenderer.on('roomInformation', (event, message, message1, token) => {
+                let roomName = message;
+                let user = message1
+                examName = message
+                userName = message1
+                console.log(examName)
+                console.log(userName)
+                console.log(token.token)
+                Token = "Token " + token.token
+                const chatSocket = connect(roomName, user)
+                document.querySelector('#submit').onclick = function(e) {
+                    const messageInputDom = document.querySelector('#input');
+                    const message = messageInputDom.value;
+                    chatSocket.send(JSON.stringify({
+                        'message': message,
+                        'username': user,
+                    }));
+                    messageInputDom.value = '';
+                    chatSocket.onclose()
+                };
+                console.log(roomName)
+                console.log(user)
 
 
 
-        });
+            });
 
-        function connect(roomName, User) {
-            const chatSocket = new WebSocket(
-                "ws://127.0.0.1:8000/ws/chat/" + User + "/" + roomName + "/"
-            );
-            chatSocket.onopen = function() {
-                // subscribe to some channels
-                chatSocket.send(JSON.stringify({
-                    //.... some message the I must send when I connect ....
-                    'message': 'User enterd the examination',
-                    'username': User,
+            function connect(roomName, User) {
+                const chatSocket = new WebSocket(
+                    "ws://127.0.0.1:8000/ws/chat/" + User + "/" + roomName + "/"
+                );
+                chatSocket.onopen = function() {
+                    // subscribe to some channels
+                    chatSocket.send(JSON.stringify({
+                        //.... some message the I must send when I connect ....
+                        'message': 'User enterd the examination',
+                        'username': User,
 
-                }));
-            };
+                    }));
+
+                };
 
 
-            chatSocket.onmessage = function(e) {
-                const data = JSON.parse(e.data);
-                console.log(data)
-                document.querySelector('#chat-text').value += (data.username + ': ' + data.message + '\n')
+                chatSocket.onmessage = function(e) {
+                    const data = JSON.parse(e.data);
+                    console.log(data)
+                    document.querySelector('#chat-text').value += (data.username + ': ' + data.message + '\n')
+                }
+                chatSocket.onclose = function() {
+
+                    chatSocket.send(JSON.stringify({
+                        //.... some message the I must send when I connect ....
+                        'message': 'User disconnected from the examination',
+                        'username': User,
+
+                    }));
+                    chatSocket.close()
+
+                };
+
+                chatSocket.onerror = function(e) {
+                    console.log('Socket encountered error: ', e.message, 'Closing socket');
+                    chatSocket.close();
+                };
+                return chatSocket
             }
-            chatSocket.onclose = function() {
+        </script>
+        <script>
+            var counter = 4;
 
-                chatSocket.send(JSON.stringify({
-                    //.... some message the I must send when I connect ....
-                    'message': 'User disconnected from the examination',
-                    'username': User,
+            function addelement() {
+                var completelist = document.getElementById("thelist");
+                let count = 0;
+                $('#thelist').empty()
+                axios.get('http://127.0.0.1:8000/api/ExamStudent/' + examName + '/', {
+                    headers: {
+                        Authorization: Token
+                    }
+                }).then((response) => {
+                    while (count < response.data.length) {
+                        console.log(response.data)
+                        let id = response.data[count].studentID
+                        console.log(id)
+                        completelist.innerHTML +=
+                            `<li onclick =showtimeline(${id})> ID ${response.data[count].studentID} name ${response.data[count].name} </li>`
+                        count = count + 1;
+                        console.log(response.data.length)
+                        console.log(count)
 
-                }));
-                chatSocket.close()
-
-            };
-
-            chatSocket.onerror = function(e) {
-                console.log('Socket encountered error: ', e.message, 'Closing socket');
-                chatSocket.close();
-            };
-            return chatSocket
-        }
-    </script>
-    <script>
-        var counter = 4;
-
-        function addelement() {
-            var completelist = document.getElementById("thelist");
-            let count = 0;
-            axios.get('http://127.0.0.1:8000/api/ExamStudent/' + examName + '/', {
-                headers: {
-                    Authorization: Token
-                }
-            }).then((response) => {
-                while (count < response.data.length) {
-                    console.log(response.data)
-                    let id = response.data[count].studentID
-                    console.log(id)
-                    completelist.innerHTML +=
-                        `<li onclick =showtimeline(${id})> ID ${response.data[count].studentID} name ${response.data[count].name} </li>`
-                    count = count + 1;
-                    console.log(response.data.length)
-                    console.log(count)
-
-                }
+                    }
 
 
-            })
+                })
 
 
-        }
+            }
 
-        function showtimeline(id) {
-            var userTimeline = document.getElementById("timelineStudent")
-            let count = 0
-            console.log(id)
-            $('#timelineStudent').empty()
-            axios.get('http://127.0.0.1:8000/api/TimeLine/' + examName + '/' + id + '/', {
-                headers: {
-                    Authorization: Token
-                }
-            }).then((response) => {
-                while (count < response.data.length) {
-                    console.log(response.data)
-                    userTimeline.innerHTML +=
-                        `<p> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <p> <br>`
-                    count = count + 1;
-                    console.log(response.data.length)
-                    console.log(count)
+            function showTimeLinebasedOnExam() {
 
-                }
+                var Timeline = document.getElementById("timelineExam")
+                let count = 0
+                $('#timelineExam').empty()
+                axios.get('http://127.0.0.1:8000/api/TimeLine/' + examName + '/', {
+                    headers: {
+                        Authorization: Token
+                    }
+                }).then((response) => {
+                    while (count < response.data.length) {
+                        console.log(response.data)
+                        Timeline.innerHTML +=
+                            `<p> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <p> <br>`
+                        count = count + 1;
+                        console.log(response.data.length)
+                        console.log(count)
+
+                    }
+                })
+            }
+
+            function showtimeline(id) {
+                var userTimeline = document.getElementById("timelineExam")
+                let count = 0
+                console.log(id)
+                $('#timelineExam').empty()
+                axios.get('http://127.0.0.1:8000/api/TimeLine/' + examName + '/' + id + '/', {
+                    headers: {
+                        Authorization: Token
+                    }
+                }).then((response) => {
+                    while (count < response.data.length) {
+                        console.log(response.data)
+                        userTimeline.innerHTML +=
+                            `<p> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <p> <br>`
+                        count = count + 1;
+                        console.log(response.data.length)
+                        console.log(count)
+
+                    }
 
 
-            })
-        }
-    </script>
+                })
+            }
+        </script>
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 </body>
 
