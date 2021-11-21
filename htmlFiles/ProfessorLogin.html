@@ -2,78 +2,16 @@
 <html>
 
 <head>
-    <title>Specula</title>
+    <title>Specula | Professor Login</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/photon.css">
-    <link href="css/#ProfessorLogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/ProfessorLogin.css" />
     <!-- Electron Javascript -->
 
 </head>
-<style>
-    body {
-        background-color: rgb(255, 0, 0);
-        color: rgb(27, 27, 27);
-        font-family: 'Ubuntu', sans-serif;
-    }
-    
-    .dark-mode {
-        background-color: #002b2b;
-        color: white;
-    }
-    
-    button {
-        cursor: pointer;
-        border-radius: 40px;
-        border-style: none;
-        padding: 15px;
-        background-color: rgb(97, 0, 0);
-        color: white;
-    }
-    
-    .main {
-        margin: auto;
-        width: 80%;
-        padding-top: 10px;
-        height: 500px;
-        box-shadow: 0px 0px 1px 15px #c2c2c23f;
-        background: rgba(136, 126, 126, 0.04);
-        border-radius: 20px;
-    }
-    
-    .submit {
-        cursor: pointer;
-        border-radius: 5em;
-        color: #fff;
-        background-color: rgb(119, 0, 0);
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        font-family: 'Ubuntu', sans-serif;
-        font-size: 13px;
-        align-items: center;
-    }
-    
-    .submit:hover {
-        background-color: rgb(0, 43, 33);
-    }
-    
-    .label {
-        margin: 40px;
-        padding-top: 40px;
-        color: #8d8d8d;
-        font-family: 'Ubuntu', sans-serif;
-        font-weight: bold;
-        font-size: 23px;
-    }
-    
-    .field {
-        padding: 10px 25px;
-        border-radius: 10px;
-        border: 2px solid rgba(0, 0, 0, 0.062);
-    }
-</style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </script>
 <script>
@@ -139,27 +77,30 @@
         } while (currentDate - date < milliseconds);
     }
 </script>
-
 <body>
     <!-- Wrap your entire app inside .window -->
-    <div class="window">
         <!-- .toolbar-header sits at the top of your app -->
-
-
         <!-- Your app's content goes inside .window-content -->
         <div class="window-content">
 
             <div class="padded-more">
+                <button  onclick="myFunction()" style="font-size:24px"> <i class="fa fa-adjust"></i></button>
+              <script>
+              function myFunction() {
+                 var element = document.body;
+                 element.classList.toggle("dark-mode"); }
+              </script>
                 <div class="main">
                     <form>
-
-
-                        <label class="label">Email address</label>
+                        <div>
+                      <h2>Professor</h2>
+                      <hr>
+                        <h1 >E-mail Address</h1>
                         <input type="email" class="field" placeholder="Email" id="email">
 
 
-                        <label class="label">Password</label>
-                        <input type="password" class="field" placeholder="Password" id="password">
+                        <h1 >Password</h1>
+                        <input type="password" class="field" placeholder="********" id="password">
 
 
 

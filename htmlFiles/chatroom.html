@@ -3,12 +3,21 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet"
+          href="css/chatroom.css"/>
+    <script defer src="render.js"></script>
 
-    <title>Hello, world!</title>
+    <title>Specula | Chatroom</title>
 </head>
 
 <script>
@@ -18,49 +27,68 @@
     const {
         ipcRenderer
     } = require("electron")
+
+
+
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js"
+        integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous">
 </script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous">
 </script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous">
 </script>
 
 <body>
+<button onclick="myFunction()"
+        style="font-size:24px"><i
+        class="fa fa-adjust"></i></button>
 
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-6">
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1" class="h4 pt-5">Chatroom</label>
-                        <textarea class="form-control" id="chat-text" rows="5"></textarea><br>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" id="input" type="text"></br>
-                    </div>
-                    <input class="btn btn-secondary btn-lg btn-block" id="submit" type="button" value="Send">
-                </form>
+
+<script>
+    function myFunction() {
+       var element = document.body;
+       element.classList.toggle("dark-mode");
+    }
+
+
+
+</script>
+<div class="container row_custom">
+    <div class="col_custom">
+        <table style="padding: 5px;border: 1px solid black;">
+            <tr>
+                <th style="padding: 5px;width:200px;border: 1px solid black;">Students in Exam</th>
+                <th style="padding: 5px;width:400px;border: 1px solid black;">Timeline</th>
+            </tr>
+            <tr>
+                <td style="padding: 5px;width:200px;border: 1px solid black;">
+                    <ul id="thelist">
+
+                    </ul>
+                </td>
+                <td style="padding: 5px;width:400px;border: 1px solid black;">
+                    <p id="timelineExam"></p>
+                </td>
+            </tr>
+        </table>
+        <div class="button_align">
+            <div class="timeline_button_container">
+                <button onclick="addelement()">Update Students</button>
             </div>
-        </div>
-    </div>
-
-    <div>
-        <h3>List of students in Examination</h3>
-        <ul id="thelist">
-
-        </ul>
-    </div>
-    <div>
-        <p id="timelineExam">
-
-        </p>
-    </div>
-    <div>
-        <button onclick="addelement()">Add Item</button>
-        <button onclick="showTimeLinebasedOnExam()">View Timeline</button>
-        <script>
+            <div class="timeline_button_container">
+                <button onclick="showTimeLinebasedOnExam()">View Timeline</button>
+            </div>
+            <script>
             let examName
             let userName
             let Token
@@ -131,8 +159,11 @@
                 };
                 return chatSocket
             }
-        </script>
-        <script>
+
+
+
+            </script>
+            <script>
             var counter = 4;
 
             function addelement() {
@@ -149,7 +180,7 @@
                         let id = response.data[count].studentID
                         console.log(id)
                         completelist.innerHTML +=
-                            `<li onclick =showtimeline(${id})> ID ${response.data[count].studentID} name ${response.data[count].name} </li>`
+                            `<li onclick =showtimeline(${id}) class="colorChange"> ID ${response.data[count].studentID} name ${response.data[count].name} </li>`
                         count = count + 1;
                         console.log(response.data.length)
                         console.log(count)
@@ -175,7 +206,7 @@
                     while (count < response.data.length) {
                         console.log(response.data)
                         Timeline.innerHTML +=
-                            `<p> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <p> <br>`
+                            `<p class="colorChange"> ${response.data[count].student} AItimeStamp ${response.data[count].AItimeStamp} AIdangerLevel ${response.data[count].AIdangerLevel}  AItextMessage  ${response.data[count].AItextMessage} <p> <br>`
                         count = count + 1;
                         console.log(response.data.length)
                         console.log(count)
@@ -207,12 +238,31 @@
 
                 })
             }
-        </script>
 
 
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
+            </script>
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        </div>
+    </div>
+    <div class="col_custom_chat">
+        <div class="row d-flex justify-content-center">
+            <div class="col-6">
+                <form>
+                    <div class="form-group">
+                        <label for="chat-text" class="h4 pt-5">Chatroom</label>
+                        <textarea class="form-control" id="chat-text" rows="5"></textarea><br>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="input" type="text"></br>
+                    </div>
+                    <input class="btn btn-secondary btn-lg btn-block" id="submit" type="button" value="Send">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

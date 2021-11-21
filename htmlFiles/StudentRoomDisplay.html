@@ -7,9 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <link rel="stylesheet" href="css/photon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/StudentRoomDisplay.css"/>
+
+    <title>Specula | Student Display</title>
 </head>
 
 <script>
@@ -19,41 +24,59 @@
     const {
         ipcRenderer
     } = require("electron")
+
+
 </script>
 
 
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js"
+        integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
 </script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
 </script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
 </script>
 
 <body>
-    <!-- Wrap your entire app inside .window -->
-    <video id="videoCamera" autoplay></video>
-    <button class="btn btn-large btn-negative" onclick="exitRoom()">Exit Room</button>
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-6">
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1" class="h4 pt-5">Chatroom</label>
-                        <textarea class="form-control" id="chat-text" rows="10"></textarea><br>
+<!-- Wrap your entire app inside .window -->
+<div class="window-content">
+    <div class="padded-more">
+        <div class="main">
+            <div class="main-align">
+                <div class="align-part">
+                    <label for="videoCamera" class="h4 pt-5">Webcam</label>
+                    <video id="videoCamera" height="400px" autoplay></video>
+                </div>
+                <div class="align-part">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-6">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="chat-text" class="h4 pt-5">Chatroom</label>
+                                        <textarea class="form-control" id="chat-text" rows="10"></textarea><br>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="input" type="text"></br>
+                                    </div>
+                                    <input class="btn btn-secondary btn-lg btn-block" id="submit" type="submit"
+                                           value="Send">
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input class="form-control" id="input" type="text"></br>
-                    </div>
-                    <input class="btn btn-secondary btn-lg btn-block" id="submit" type="button" value="Send">
-                </form>
+                </div>
             </div>
         </div>
+        <button class="btn btn-large btn-negative" onclick="exitRoom()">Exit Room</button>
     </div>
-
-    <script>
+</div>
+<script>
         navigator.mediaDevices.getUserMedia({
             video: {
                 width: {
@@ -111,16 +134,11 @@
                 let time = ts.getHours() + ":" + ts.getMinutes() + ":" + ts.getSeconds()
                 console.log(time)
                     /*axios.post('http://127.0.0.1:8000/api/TimeLine/', {
-
                         student: User,
                         AItimeStamp: time,
                         CurrentExam: roomName,
                         AIdangerLevel: '0',
                         AItextMessage: 'Entered examination'
-
-
-
-
                     })*/
             };
 
@@ -154,7 +172,9 @@
             ipcRenderer.send('window-all-closed')
             console.log("window-all-closed")
         }
-    </script>
+
+
+</script>
 </body>
 
 </html>

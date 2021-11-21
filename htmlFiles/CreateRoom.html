@@ -2,45 +2,52 @@
 <html>
 
 <head>
-    <title>Specula</title>
+    <title>Specula | Create Room</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/photon.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/create_room.css"/>
     <!-- Electron Javascript -->
 
 </head>
-
 <body>
-    <!-- Wrap your entire app inside .window -->
-    <div class="window">
-        <!-- .toolbar-header sits at the top of your app -->
+        <div>
+            <button onclick="myFunction()" style="font-size:24px">
+                <i class="fa fa-adjust"></i>
+            </button>
 
-        <!-- Your app's content goes inside .window-content -->
-        <div class="window-content">
 
-            <div class="padded-more">
+            <script>
+              function myFunction() {
+                 var element = document.body;
+                 element.classList.toggle("dark-mode"); }
+
+            </script>
+            <div class="main">
 
                 <h1>Create Room</h1>
+                <hr>
+
                 <form id="inputForm">
-                    <div class="form-group">
+                    <div class="form">
                         <label>Enter room name</label>
-                        <input type="email" class="form-control" placeholder="Email" id="roomname">
-                    </div>
-                    <div class="form-group">
-                        <label>Enter your username</label>
-                        <input type="username" class="form-control" id="username" placeholder="Password">
+                        <input type="email" class="form-control" placeholder="Room ID" id="roomname">
+
+                        <label>Enter Professor ID</label>
+                        <input type="username" class="form-control" placeholder="Professor ID" id="username">
 
                     </div>
 
+                    <button class="submit" id="submit" onclick="">Create</button>
                 </form>
-                <button class="btn btn-large btn-primary" id="submit" onclick="">Login</button>
-            </div>
 
+            </div>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js" integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.js"
+        integrity="sha512-nZmAl1ClAQ0kQ2EH3H6JMQHxNt2K7pGcgxQRoMpYuuuXyPnIGaMKNS7jwZRqBJhfSRYXc2myu+iKFbwhiCL3+w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
         const electron = require("electron")
 
         const {
@@ -97,7 +104,7 @@
             }
 
         })
-    </script>
+</script>
 </body>
 
 </html>
